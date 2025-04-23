@@ -1,0 +1,45 @@
+{
+    "title": "GMGN Scraper Input",
+    "description": "Specify wallet addresses and optional filters for scraping.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "walletAddresses": {
+            "title": "Wallet Addresses",
+            "type": "array",
+            "description": "Enter the wallet addresses to check (one per line). At least one address is required.",
+            "editor": "stringList",
+            "minItems": 1
+        },
+        "chain": {
+            "title": "Blockchain Network",
+            "type": "string",
+            "description": "Select the blockchain network (optional, defaults to Solana if empty)",
+            "editor": "select",
+            "enum": ["sol", "bsc", "eth", "blast", "base"],
+            "enumTitles": [
+                "Solana",
+                "BSC (Binance Smart Chain)",
+                "Ethereum",
+                "Blast",
+                "Base"
+            ],
+            "default": "sol"
+        },
+        "period": {
+            "title": "Time Period",
+            "type": "string",
+            "description": "Select the time period for analysis (optional, defaults to 7 days)",
+            "editor": "select",
+            "enum": ["1d", "7d", "30d", "all"],
+            "enumTitles": [
+                "Last 1 day",
+                "Last 7 days",
+                "Last 30 days",
+                "All time"
+            ],
+            "default": "7d"
+        }
+    },
+    "required": ["walletAddresses"]
+}

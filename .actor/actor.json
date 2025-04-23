@@ -1,12 +1,15 @@
 {
-	"actorSpecification": 1,
-	"name": "gmgn-scraper-ts-2",
-	"title": "Empty TypeScript project",
-	"description": "Empty project in TypeScript.",
-	"version": "0.0",
-	"buildTag": "latest",
-	"meta": {
-		"templateId": "ts-empty"
-	},
-	"dockerfile": "./Dockerfile"
+    "actorSpecification": 1,
+    "name": "GMGN Wallet Stats Scraper",
+    "title": "GMGN Wallet Stats Scraper",
+    "description": "Scrapes wallet statistics from gmgn.ai for specified addresses.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "ts-empty"
+    },
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
 }

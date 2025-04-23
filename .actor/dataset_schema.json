@@ -1,0 +1,224 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Wallet Stats Overview",
+            "transformation": {
+                "fields": [
+                    "address",
+                    "chain",
+                    "period",
+                    "name",
+                    "ens",
+                    "twitter_username",
+                    "twitter_fans_num",
+                    "followers_count",
+                    "tags",
+                    "pnl",
+                    "pnl_1d",
+                    "pnl_7d",
+                    "pnl_30d",
+                    "all_pnl",
+                    "winrate",
+                    "realized_profit",
+                    "realized_profit_1d",
+                    "realized_profit_7d",
+                    "realized_profit_30d",
+                    "unrealized_profit",
+                    "unrealized_pnl",
+                    "total_profit",
+                    "total_profit_pnl",
+                    "buy",
+                    "buy_1d",
+                    "buy_7d",
+                    "buy_30d",
+                    "sell",
+                    "sell_1d",
+                    "sell_7d",
+                    "sell_30d",
+                    "total_value",
+                    "balance",
+                    "eth_balance",
+                    "sol_balance",
+                    "trx_balance",
+                    "bnb_balance",
+                    "token_sold_avg_profit",
+                    "history_bought_cost",
+                    "token_avg_cost",
+                    "token_num",
+                    "profit_num",
+                    "pnl_lt_minus_dot5_num",
+                    "pnl_minus_dot5_0x_num",
+                    "pnl_lt_2x_num",
+                    "pnl_2x_5x_num",
+                    "pnl_gt_5x_num",
+                    "avg_holding_peroid",
+                    "last_active_timestamp",
+                    "updated_at",
+                    "is_contract",
+                    "bind",
+                    "twitter_bind",
+                    "avatar",
+                    "tag_rank",
+                    "risk",
+                    "refresh_requested_at",
+                    "twitter_name"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "address": { "label": "Wallet Address", "format": "text" },
+                    "chain": { "label": "Chain", "format": "text" },
+                    "period": { "label": "Period", "format": "text" },
+                    "name": { "label": "Name", "format": "text" },
+                    "ens": { "label": "ENS", "format": "text" },
+                    "twitter_username": {
+                        "label": "Twitter Handle",
+                        "format": "text"
+                    },
+                    "twitter_fans_num": {
+                        "label": "Twitter Fans",
+                        "format": "number"
+                    },
+                    "followers_count": {
+                        "label": "Followers",
+                        "format": "number"
+                    },
+                    "tags": { "label": "Tags", "format": "array" },
+                    "pnl": { "label": "PnL (%)", "format": "number" },
+                    "pnl_1d": { "label": "PnL 1d (%)", "format": "number" },
+                    "pnl_7d": { "label": "PnL 7d (%)", "format": "number" },
+                    "pnl_30d": { "label": "PnL 30d (%)", "format": "number" },
+                    "all_pnl": { "label": "PnL All (%)", "format": "number" },
+                    "winrate": { "label": "Win Rate (%)", "format": "number" },
+                    "realized_profit": {
+                        "label": "Realized Profit ($)",
+                        "format": "number"
+                    },
+                    "realized_profit_1d": {
+                        "label": "Realized Profit 1d ($)",
+                        "format": "number"
+                    },
+                    "realized_profit_7d": {
+                        "label": "Realized Profit 7d ($)",
+                        "format": "number"
+                    },
+                    "realized_profit_30d": {
+                        "label": "Realized Profit 30d ($)",
+                        "format": "number"
+                    },
+                    "unrealized_profit": {
+                        "label": "Unrealized Profit ($)",
+                        "format": "number"
+                    },
+                    "unrealized_pnl": {
+                        "label": "Unrealized PnL (%)",
+                        "format": "number"
+                    },
+                    "total_profit": {
+                        "label": "Total Profit ($)",
+                        "format": "number"
+                    },
+                    "total_profit_pnl": {
+                        "label": "Total Profit PnL (%)",
+                        "format": "number"
+                    },
+                    "buy": { "label": "Buys", "format": "number" },
+                    "buy_1d": { "label": "Buys 1d", "format": "number" },
+                    "buy_7d": { "label": "Buys 7d", "format": "number" },
+                    "buy_30d": { "label": "Buys 30d", "format": "number" },
+                    "sell": { "label": "Sells", "format": "number" },
+                    "sell_1d": { "label": "Sells 1d", "format": "number" },
+                    "sell_7d": { "label": "Sells 7d", "format": "number" },
+                    "sell_30d": { "label": "Sells 30d", "format": "number" },
+                    "total_value": {
+                        "label": "Total Value ($)",
+                        "format": "number"
+                    },
+                    "balance": {
+                        "label": "Balance (Native)",
+                        "format": "text"
+                    },
+                    "eth_balance": { "label": "ETH Balance", "format": "text" },
+                    "sol_balance": { "label": "SOL Balance", "format": "text" },
+                    "trx_balance": { "label": "TRX Balance", "format": "text" },
+                    "bnb_balance": { "label": "BNB Balance", "format": "text" },
+                    "token_sold_avg_profit": {
+                        "label": "Avg Sold Token Profit ($)",
+                        "format": "number"
+                    },
+                    "history_bought_cost": {
+                        "label": "Total Buy Cost ($)",
+                        "format": "number"
+                    },
+                    "token_avg_cost": {
+                        "label": "Avg Token Cost ($)",
+                        "format": "number"
+                    },
+                    "token_num": {
+                        "label": "# Tokens Held",
+                        "format": "number"
+                    },
+                    "profit_num": {
+                        "label": "# Profitable Tokens",
+                        "format": "number"
+                    },
+                    "pnl_lt_minus_dot5_num": {
+                        "label": "# Tokens PnL < -50%",
+                        "format": "number"
+                    },
+                    "pnl_minus_dot5_0x_num": {
+                        "label": "# Tokens PnL -50% to 0%",
+                        "format": "number"
+                    },
+                    "pnl_lt_2x_num": {
+                        "label": "# Tokens PnL 0% to 2x",
+                        "format": "number"
+                    },
+                    "pnl_2x_5x_num": {
+                        "label": "# Tokens PnL 2x to 5x",
+                        "format": "number"
+                    },
+                    "pnl_gt_5x_num": {
+                        "label": "# Tokens PnL > 5x",
+                        "format": "number"
+                    },
+                    "avg_holding_peroid": {
+                        "label": "Avg Holding Period (s)",
+                        "format": "number"
+                    },
+                    "last_active_timestamp": {
+                        "label": "Last Active",
+                        "format": "date"
+                    },
+                    "updated_at": {
+                        "label": "Stats Updated At",
+                        "format": "date"
+                    },
+                    "is_contract": {
+                        "label": "Is Contract?",
+                        "format": "boolean"
+                    },
+                    "bind": { "label": "Bound?", "format": "boolean" },
+                    "twitter_bind": {
+                        "label": "Twitter Bound?",
+                        "format": "boolean"
+                    },
+                    "avatar": { "label": "Avatar", "format": "image" },
+                    "tag_rank": { "label": "Tag Rank", "format": "object" },
+                    "risk": { "label": "Risk Analysis", "format": "object" },
+                    "refresh_requested_at": {
+                        "label": "Refresh Requested",
+                        "format": "text"
+                    },
+                    "twitter_name": {
+                        "label": "Twitter Name",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

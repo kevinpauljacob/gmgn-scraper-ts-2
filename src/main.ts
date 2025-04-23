@@ -5,8 +5,9 @@ import { gotScraping } from 'got-scraping';
 // Define interfaces
 interface Input {
     walletAddresses: string[];
+    chain?: string; // Added chain
     period?: string;
-    maxConcurrency?: number;
+    // maxConcurrency removed
 }
 
 interface GmgnWalletStatResponse {
@@ -85,6 +86,7 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 // Function to fetch wallet stats
 async function fetchWalletStats(
     walletAddress: string,
+    chain: string, // Added chain parameter
     period: string,
 ): Promise<WalletStatData | null> {
     try {
@@ -102,10 +104,12 @@ async function fetchWalletStats(
             period,
         });
 
-        // Construct the URL
-        const url = `https://gmgn.ai/api/v1/wallet_stat/sol/${walletAddress}/${period}?${queryParams}`;
+        // Construct the URL using the chain parameter
+        const url = `https://gmgn.ai/api/v1/wallet_stat/${chain}/${walletAddress}/${period}?${queryParams}`; // Use chain variable
 
-        console.log(`Fetching data for wallet: ${walletAddress}`);
+        console.log(
+            `Fetching data for wallet: ${walletAddress} on chain: ${chain}`,
+        ); // Updated log
 
         // Use got-scraping to fetch data with HTTP/2
         const response = await gotScraping({
@@ -141,7 +145,8 @@ async function fetchWalletStats(
             return data.data;
         } else {
             console.error(
-                `Failed to fetch data for wallet ${walletAddress}: ${
+                `Failed to fetch data for wallet ${walletAddress} on chain ${chain}: ${
+                    // Updated log
                     data?.message || 'Unknown error'
                 }`,
             );
@@ -149,7 +154,7 @@ async function fetchWalletStats(
         }
     } catch (error) {
         console.error(
-            `Error fetching wallet stats for ${walletAddress}:`,
+            `Error fetching wallet stats for ${walletAddress} on chain ${chain}:`, // Updated log
             error,
         );
         return null;
@@ -159,16 +164,19 @@ async function fetchWalletStats(
 // Process wallets with concurrency control
 async function processWallets(
     walletAddresses: string[],
+    chain: string, // Added chain parameter
     period: string,
-    maxConcurrency: number,
+    // maxConcurrency removed, hardcode concurrency below
 ): Promise<WalletData[]> {
     const results: WalletData[] = [];
+    const concurrency = 3; // Hardcoded concurrency
 
-    // Process wallets in chunks based on maxConcurrency
-    for (let i = 0; i < walletAddresses.length; i += maxConcurrency) {
-        const chunk = walletAddresses.slice(i, i + maxConcurrency);
+    // Process wallets in chunks based on concurrency
+    for (let i = 0; i < walletAddresses.length; i += concurrency) {
+        const chunk = walletAddresses.slice(i, i + concurrency);
         const chunkPromises = chunk.map(async (address) => {
-            const stats = await fetchWalletStats(address, period);
+            // Pass chain to fetchWalletStats
+            const stats = await fetchWalletStats(address, chain, period);
 
             if (stats) {
                 return { address, stats };
@@ -186,8 +194,8 @@ async function processWallets(
         );
 
         // Add delay between chunks to avoid rate limiting
-        if (i + maxConcurrency < walletAddresses.length) {
-            await delay(500);
+        if (i + concurrency < walletAddresses.length) {
+            await delay(500); // Keep delay between chunks
         }
     }
 
@@ -209,33 +217,40 @@ async function main() {
         throw new Error('Input must contain an array of wallet addresses');
     }
 
-    // Set default options
-    const period = input.period || '7d';
-    const maxConcurrency = input.maxConcurrency || 3;
+    // Set default options using schema defaults
+    const chain = input.chain || 'sol'; // Use schema default
+    const period = input.period || '7d'; // Use schema default
+    // maxConcurrency removed
 
     console.log(
-        `Fetching wallet stats for ${input.walletAddresses.length} addresses...`,
+        `Fetching wallet stats for ${input.walletAddresses.length} addresses on chain ${chain}...`, // Updated log
     );
 
-    // Process the wallets
+    // Process the wallets, pass chain, remove maxConcurrency
     const results = await processWallets(
         input.walletAddresses,
+        chain,
         period,
-        maxConcurrency,
+        // concurrency is now handled inside processWallets
     );
 
-    // Create a wallet-to-data map object
-    const walletDataMap = {
-        timestamp: new Date().toISOString(),
-        period: period,
-        wallets: results,
-    };
-
-    // Save all data as a single dataset item
-    await Actor.pushData(walletDataMap);
+    // Push each wallet's data individually
+    let processedCount = 0;
+    for (const result of results) {
+        if (result) {
+            const outputItem = {
+                address: result.address,
+                chain: chain,
+                period: period,
+                ...result.stats, // Spread all stats fields
+            };
+            await Actor.pushData(outputItem);
+            processedCount++;
+        }
+    }
 
     console.log(
-        `Successfully processed ${results.length} of ${input.walletAddresses.length} wallet addresses.`,
+        `Successfully processed and saved data for ${processedCount} of ${input.walletAddresses.length} wallet addresses.`,
     );
 
     await Actor.exit();
