@@ -7,9 +7,10 @@
         "walletAddresses": {
             "title": "Wallet Addresses",
             "type": "array",
-            "description": "Enter the wallet addresses to check (one per line). At least one address is required.",
+            "description": "Enter the wallet addresses to check (one per line). At least one address is required. Maximum 3 addresses per run.",
             "editor": "stringList",
-            "minItems": 1
+            "minItems": 1,
+            "maxItems": 3
         },
         "chain": {
             "title": "Blockchain Network",

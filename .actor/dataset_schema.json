@@ -1,10 +1,71 @@
 {
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "address": { "type": "string" },
+        "chain": { "type": "string" },
+        "period": { "type": "string" },
+        "name": { "type": "string" },
+        "ens": { "type": "string" },
+        "twitter_username": { "type": "string" },
+        "twitter_fans_num": { "type": "number" },
+        "followers_count": { "type": "number" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "pnl": { "type": "number" },
+        "pnl_1d": { "type": "number" },
+        "pnl_7d": { "type": "number" },
+        "pnl_30d": { "type": "number" },
+        "all_pnl": { "type": "number" },
+        "winrate": { "type": "number" },
+        "realized_profit": { "type": "number" },
+        "realized_profit_1d": { "type": "number" },
+        "realized_profit_7d": { "type": "number" },
+        "realized_profit_30d": { "type": "number" },
+        "unrealized_profit": { "type": "number" },
+        "unrealized_pnl": { "type": "number" },
+        "total_profit": { "type": "number" },
+        "total_profit_pnl": { "type": "number" },
+        "buy": { "type": "number" },
+        "buy_1d": { "type": "number" },
+        "buy_7d": { "type": "number" },
+        "buy_30d": { "type": "number" },
+        "sell": { "type": "number" },
+        "sell_1d": { "type": "number" },
+        "sell_7d": { "type": "number" },
+        "sell_30d": { "type": "number" },
+        "total_value": { "type": "number" },
+        "balance": { "type": "string" },
+        "eth_balance": { "type": "string" },
+        "sol_balance": { "type": "string" },
+        "trx_balance": { "type": "string" },
+        "bnb_balance": { "type": "string" },
+        "token_sold_avg_profit": { "type": "number" },
+        "history_bought_cost": { "type": "number" },
+        "token_avg_cost": { "type": "number" },
+        "token_num": { "type": "number" },
+        "profit_num": { "type": "number" },
+        "pnl_lt_minus_dot5_num": { "type": "number" },
+        "pnl_minus_dot5_0x_num": { "type": "number" },
+        "pnl_lt_2x_num": { "type": "number" },
+        "pnl_2x_5x_num": { "type": "number" },
+        "pnl_gt_5x_num": { "type": "number" },
+        "avg_holding_peroid": { "type": "number" },
+        "last_active_timestamp": { "type": "number" },
+        "updated_at": { "type": "number" },
+        "is_contract": { "type": "boolean" },
+        "bind": { "type": "boolean" },
+        "twitter_bind": { "type": "boolean" },
+        "avatar": { "type": "string" },
+        "tag_rank": { "type": "object" },
+        "risk": { "type": "object" },
+        "refresh_requested_at": { "type": ["string", "null"] },
+        "twitter_name": { "type": "string" }
+    },
     "views": {
         "overview": {
             "title": "Wallet Stats Overview",
+            "description": "This table shows wallet trading and performance metrics including realized/unrealized profits, token stats, and social info such as Twitter reach.",
             "transformation": {
+                "flatten": ["tag_rank", "risk"],
                 "fields": [
                     "address",
                     "chain",
@@ -60,8 +121,19 @@
                     "bind",
                     "twitter_bind",
                     "avatar",
-                    "tag_rank",
-                    "risk",
+                    "tag_rank.bullx",
+                    "tag_rank.kol",
+                    "tag_rank.photon",
+                    "tag_rank.pump_smart",
+                    "risk.token_active",
+                    "risk.token_honeypot",
+                    "risk.token_honeypot_ratio",
+                    "risk.no_buy_hold",
+                    "risk.no_buy_hold_ratio",
+                    "risk.sell_pass_buy",
+                    "risk.sell_pass_buy_ratio",
+                    "risk.fast_tx",
+                    "risk.fast_tx_ratio",
                     "refresh_requested_at",
                     "twitter_name"
                 ]
@@ -207,8 +279,52 @@
                         "format": "boolean"
                     },
                     "avatar": { "label": "Avatar", "format": "image" },
-                    "tag_rank": { "label": "Tag Rank", "format": "object" },
-                    "risk": { "label": "Risk Analysis", "format": "object" },
+                    "tag_rank.bullx": {
+                        "label": "Bullx Rank",
+                        "format": "number"
+                    },
+                    "tag_rank.kol": { "label": "KOL Rank", "format": "number" },
+                    "tag_rank.photon": {
+                        "label": "Photon Rank",
+                        "format": "number"
+                    },
+                    "tag_rank.pump_smart": {
+                        "label": "Pump Smart Rank",
+                        "format": "number"
+                    },
+                    "risk.token_active": {
+                        "label": "Token Count",
+                        "format": "number"
+                    },
+                    "risk.token_honeypot": {
+                        "label": "Honeypots",
+                        "format": "number"
+                    },
+                    "risk.token_honeypot_ratio": {
+                        "label": "Honeypot Ratio",
+                        "format": "number"
+                    },
+                    "risk.no_buy_hold": {
+                        "label": "No Buy Hold",
+                        "format": "number"
+                    },
+                    "risk.no_buy_hold_ratio": {
+                        "label": "No Buy Hold Ratio",
+                        "format": "number"
+                    },
+                    "risk.sell_pass_buy": {
+                        "label": "Sell > Buy",
+                        "format": "number"
+                    },
+                    "risk.sell_pass_buy_ratio": {
+                        "label": "Sell/Buy Ratio",
+                        "format": "number"
+                    },
+                    "risk.fast_tx": { "label": "Fast TXs", "format": "number" },
+                    "risk.fast_tx_ratio": {
+                        "label": "Fast TX Ratio",
+                        "format": "number"
+                    },
                     "refresh_requested_at": {
                         "label": "Refresh Requested",
                         "format": "text"
